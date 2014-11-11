@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+
+
+<polymer-element name="my-element" attributes="posts">
+  <template>
+    
+	<core-ajax id='ajax'
+	  
+	  auto
+	  url = '../../example/example.json'
+	  handleAs='json'
+	  on-core-response='{{postsLoaded}}'
+	 
+    ></core-ajax>
+	
+    <span id='post'>{{posts.name}}</span>
+	
+  
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer('my-element',{
+        // define element prototype here
+	    created: function(){
+		  this.posts = []
+        },
+		postsLoaded: function() {
+        // Make a copy of the loaded data
+          this.posts = this.$.ajax.response;
+        }
+		
+	 		
+      });
+
+    })();
+  </script>
+</polymer-element>

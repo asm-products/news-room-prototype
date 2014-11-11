@@ -1,0 +1,88 @@
+body {
+  background: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+header{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100px;
+  background:black;
+  color:white;
+  margin:0;
+  padding:0;
+}
+
+h1{
+  padding:.75em;
+}
+
+my-element{
+ 
+ font-size: 2em;
+ 
+}
+
+nav{
+  position:absolute;
+  padding:.75em;
+  top:100px;
+  left:0;
+}
+
+.hero-unit {
+  position: relative;
+  margin: 50px auto 0 auto;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 60px;
+  
+}
+
+.hero-unit{
+   box-shadow: 0 1px 4px 0 slategray;
+}
+
+.hero-unit my-element {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+#paperMenu{
+
+  font-size: 2em;
+  position: relative;
+  left:0;
+  top:0;
+  width:300px;
+  background:inherit;
+}
+
+#paperMenu >paper-item{
+  width:300px;
+  font-size:1em;
+  color:black;
+}
+
+paper-radio-group{
+  
+  position:absolute;
+  top:100px;
+}
+
+
