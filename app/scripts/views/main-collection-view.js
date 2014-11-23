@@ -1,5 +1,7 @@
-app.MainCollectionView = Marionette.CollectionView.extend({
+app.Collect = Backbone.Collection.extend({
 
-
-
+  model: app.MainModel
+    
+ 
 });
+

@@ -17,10 +17,10 @@ app.addRegions({
 app.Router = Backbone.Router.extend({
 
   routes: {
-    'home/:see': 'see'
+    'search/*path': 'path'
   },
   
-  see: function(){ }
+  search: function(){ }
 
 });
 

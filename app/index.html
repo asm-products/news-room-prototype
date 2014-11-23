@@ -11,14 +11,20 @@
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/phone.css">
+  
   <!-- endbuild-->
+  <script src="bower_components/platform/platform.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/underscore/underscore.js"></script>
-  <script src="bower_components/backbone/backbone.js"></script>  
+  <script src="bower_components/backbone/backbone.js"></script>
+ 
+  
   <script src="bower_components/backbone.babysitter.js"></script>  
   <script src="bower_components/backbone.wreqr.js"></script>  
   <script src="bower_components/backbone.marionette.js"></script>  
-  <script src="bower_components/platform/platform.js"></script>
+ 
+  
   <script src="bower_components/web-animations-js/web-animations.js"></script>
   
   <!-- build:vulcanized elements/elements.vulcanized.html -->
@@ -27,10 +33,20 @@
 </head>
 
 <body unresolved>
-   <header>
+   <header layout horizontal center>
      <h1>Title</h1>
+  
   </header>
+  <div class='navWrapper'>
+  
   <nav>
+    <div id='search' layout horizontal center>
+	  <paper-input label='search'></paper-input>
+      <core-icon-button icon='search'></core-icon-button>
+    </div>
+	
+	<h3>FILTER</h3>
+   
   <paper-dropdown-menu id='paperMenu' selected="Financier" valueattr="label">
         <paper-item label="Croissant"></paper-item>
         <paper-item label="Donut"></paper-item>
@@ -38,30 +54,37 @@
         <paper-item label="Madeleine"></paper-item>
   </paper-dropdown-menu>
   
-  <paper-radio-group selected="small">
-      <paper-radio-button name="small" label="Small"></paper-radio-button>
-      <paper-radio-button name="medium" label="Medium"></paper-radio-button>
-      <paper-radio-button name="large" label="Large"></paper-radio-button>
+  <h3>Sort</h3>
+  
+  <paper-radio-group id='sort' selected="relevance">
+      <paper-radio-button name="relevance" label="Relevance"></paper-radio-button>
+      <paper-radio-button name="newest" label="Newest"></paper-radio-button>
+      <paper-radio-button name="oldest" label="Oldest"></paper-radio-button>
   </paper-radio-group>
   </nav>
+  </div>
+  <article>
+  
   <div class="hero-unit">
-    <my-element></my-element> 
-     <div id="main-region" class="container">
-       <p>Here is static content in the web page. You'll notice that it gets 3 replaced by our app as soon as we start it.</p>
-     </div>   
+    
+    <my-element></my-element>
+	   
+	   <!--<div id="main-region" class="container">
+         <p>Here is static content in the web page. You'll notice that it gets 3 replaced by our app as soon as we start it.</p>
+       </div>-->  
+     	 
   </div>
-  
-  <div class="hero-unit"> 
-
-  </div>
-  
-  
   <script type='text/template' id='tmpl'>
   
     	  <%- info %>
 	
   </script>
 
+  </article>
+  <footer><img id='nytimes' src='nytimes.png' title='nytimes-icon' alt='nytimes.png' /></foooter>
+  
+  
+  
   <!-- build:js scripts/app.js -->
   <script src="scripts/main.js"></script>
   <script src="scripts/modules.js"></script>
@@ -71,5 +94,7 @@
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
 </body>
+
+
 
 </html>

@@ -3,35 +3,189 @@
 
 
 
-<polymer-element name="my-element" attributes="posts">
+<polymer-element name="my-element" attributes="posts params url changeParam phoneScreen">
   <template>
-    
+   
+     <style>
+	 
+	   #section{
+	     background: brown;
+		 color: white;
+		 right: 10%;
+		 padding: .2em;
+		 border-radius: 4px;
+		 position:absolute;
+	   }
+	   
+	   h2{
+	    
+	   }
+	   #header{
+	    
+  		 position: relative;
+		 width: 80%;
+		 
+	   }
+	   
+	   #results{
+	     position: relative;
+		 display: block;
+		 text-align: center;
+	     width:100%;
+	     margin:1em;
+	  }
+	 
+	 </style>
+   
 	<core-ajax id='ajax'
 	  
 	  auto
-	  url = '../../example/example.json'
+	  url = '{{url}}'
+	  params = '{{param}}'
 	  handleAs='json'
 	  on-core-response='{{postsLoaded}}'
-	 
+	  
     ></core-ajax>
+	<span id='results'>Results for</span>
+	<template repeat='{{item in posts}}'>
 	
-    <span id='post'>{{posts.name}}</span>
-	
-  
+	  <div id="sandwich" >
+	    <div layout horizontal center>
+		    <div id='header'><h2>{{item.headline.print_headline ? item.headline.print_headline : item.headline.main}}</h2></div>
+			<span id='section'>{{item.section_name}}</span>
+		</div>
+    
+		<img src='{{item.multimedia[0].url | buildUrl}}' alt='{{item.multimedia[0].url | buildUrl}}' />
+	    	    <time>{{item.pub_date | timeString}}</time>
+
+		<p>{{item.byline.original}}</p>
+	    <p id='post'>{{item.lead_paragraph ? item.lead_paragraph : item.snippet | filtrate}}</p>
+	    <p><a href='{{item.web_url}}' alt='{{item.web_url}}'>Read full story</a>
+      </div>
+	  
+	</template>
   </template>
   <script>
     (function () {
       'use strict';
-
+	  
+	  /*Todo:
+	   *
+	   * Add validation logic for search term
+	   *
+	   */
+	  
+	  
+	  String.prototype.decodeHTML = function() {
+        var map = {"gt":">" /* , … */};
+        return this.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
+          if ($1[0] === "#") {
+            return String.fromCharCode($1[1].toLowerCase() === "x" ? parseInt($1.substr(2), 16)  : parseInt($1.substr(1), 10));
+          } else {
+            return map.hasOwnProperty($1) ? map[$1] : $0;
+          }
+        });
+      };
+	  
+	  
       Polymer('my-element',{
         // define element prototype here
 	    created: function(){
-		  this.posts = []
+		
+		  document.addEventListener('core-media-change', function(){ });
+
+		  this.posts = [];
+		  this.q = 'obama';
+		  this.sort = 'relevance';
+		  
+		  this.url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=cd7c4e4c28ba64f7e457a8e5b8071801:16:69368950';
+	     
+		  this.posties = [
+		     {
+			   
+			   "headline": {"print_headline": "headlineheadlinehea dlinehead lineheadline headl ineheadline"},
+			   "pub_date": '12-12-10',
+			   "byline": {"original": "by author"},
+			   "snippet": "snippet",
+			   "web_url": "web_url",
+			   "section_name": "U.S."
+			 },
+			 {
+			   
+			   "header": {"print_headline": "headline"},
+			   "pub_date": '12-12-12',
+			   "byline": {"original": "by author"},
+			   "snippet": "snippet",
+			   "web_url": "web_url",
+			   "section_name": "World"
+			   
+			 }
+		  ];
+		  
+		  this.param = '{"q": "obama","sort": "relevance"}'
+		  
         },
 		postsLoaded: function() {
-        // Make a copy of the loaded data
-          this.posts = this.$.ajax.response;
-        }
+        
+		  // Make a copy of the loaded data
+          
+		  if(this.$.ajax.response){
+		    
+            			
+			app.router.navigate('search/' + this.q, {trigger:true});  
+			this.posts = this.$.ajax.response.response.docs;
+		    //alert(JSON.stringify(this.$.ajax.response));
+		  
+		  }
+		  else{
+		   
+		    
+   		    this.posts = this.posties;
+			$('article').hide(555).show(555);
+			app.router.navigate('search/' + this.q, {trigger:true});    
+            
+		  }
+		    
+		},
+		
+		filtrate: function(v){
+		  if(v){
+	
+		   return v.decodeHTML();
+		   
+		  }else{return ""}
+		},
+		
+		timeString: function(v){
+		  
+		  return v.slice(0,10);
+		},
+		
+		changeParam: function(v,q){
+          
+		  this.q = q;		
+		  this.param = v;
+		  //this.$.ajax.go();
+		  
+		  
+		},
+		
+		buildUrl: function(v){
+		  if(v){
+            return 'http://www.nytimes.com/' + v;
+		  }
+		},
+
+        changeSort: function(e){
+          
+		  _.extend(this.param, e, {merge:true});
+	      this.$.ajax.go();
+		}		
+		
+		
+
+		
+		
 		
 	 		
       });

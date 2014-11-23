@@ -6,8 +6,6 @@ app.MainView = Marionette.ItemView.extend({
 	
   },
   
-  tagName: 'span',
-  
   template: '#tmpl',
   
 });
