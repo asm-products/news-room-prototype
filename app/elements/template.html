@@ -9,12 +9,11 @@
      <style>
 	 
 	   #section{
-	     background: brown;
-		 color: white;
-		 right: 10%;
-		 padding: .2em;
-		 border-radius: 4px;
-		 position:absolute;
+	     background: inherit;
+		 color: black;
+		 font-family: 'times new roman' sans-serif;
+		 padding-right: 5px;
+		 border-bottom: 1px solid gray;
 	   }
 	   
 	   h2{
@@ -24,8 +23,15 @@
 	    
   		 position: relative;
 		 width: 80%;
-		 
+		 left:0;
+		 margin-left:-1px;
 	   }
+	   
+	   time{
+	     position: relative;
+		 left:0;
+		 color: slategray;
+	}
 	   
 	   #results{
 	     position: relative;
@@ -46,17 +52,21 @@
 	  on-core-response='{{postsLoaded}}'
 	  
     ></core-ajax>
-	<span id='results'>Results for</span>
+	
 	<template repeat='{{item in posts}}'>
 	
 	  <div id="sandwich" >
-	    <div layout horizontal center>
-		    <div id='header'><h2>{{item.headline.print_headline ? item.headline.print_headline : item.headline.main}}</h2></div>
-			<span id='section'>{{item.section_name}}</span>
+	    
+		<div layout horizontal center>
+      	
+		  <span id='section'>{{item.section_name}}</span>
+
 		</div>
-    
+        
+		<div id='header'><h2>{{item.headline.print_headline ? item.headline.print_headline : item.headline.main}}</h2></div>
+
 		<img src='{{item.multimedia[0].url | buildUrl}}' alt='{{item.multimedia[0].url | buildUrl}}' />
-	    	    <time>{{item.pub_date | timeString}}</time>
+	    <p><time>Published {{item.pub_date | timeString}}</time></p>
 
 		<p>{{item.byline.original}}</p>
 	    <p id='post'>{{item.lead_paragraph ? item.lead_paragraph : item.snippet | filtrate}}</p>
@@ -74,6 +84,7 @@
 	   * Add validation logic for search term
 	   *
 	   */
+	   
 	  
 	  
 	  String.prototype.decodeHTML = function() {
@@ -96,16 +107,16 @@
 
 		  this.posts = [];
 		  this.q = 'obama';
-		  this.sort = 'relevance';
+		  this.sort = 'newest';
 		  
 		  this.url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=cd7c4e4c28ba64f7e457a8e5b8071801:16:69368950';
 	     
 		  this.posties = [
 		     {
 			   
-			   "headline": {"print_headline": "headlineheadlinehea dlinehead lineheadline headl ineheadline"},
+			   "headline": {"print_headline": "Story Headline"},
 			   "pub_date": '12-12-10',
-			   "byline": {"original": "by author"},
+			   "byline": {"original": "by John Smith"},
 			   "snippet": "snippet",
 			   "web_url": "web_url",
 			   "section_name": "U.S."
@@ -114,7 +125,7 @@
 			   
 			   "header": {"print_headline": "headline"},
 			   "pub_date": '12-12-12',
-			   "byline": {"original": "by author"},
+			   "byline": {"original": "by Jane Doe"},
 			   "snippet": "snippet",
 			   "web_url": "web_url",
 			   "section_name": "World"
@@ -122,31 +133,34 @@
 			 }
 		  ];
 		  
-		  this.param = '{"q": "obama","sort": "relevance"}'
+		  this.param = {"q": "obama","sort": "oldest"};
+		  
+		  this.cache = {};
 		  
         },
-		postsLoaded: function() {
+		
+		postsLoaded: function(ev) {
         
 		  // Make a copy of the loaded data
           
 		  if(this.$.ajax.response){
-		    
-            			
-			app.router.navigate('search/' + this.q, {trigger:true});  
+		    app.router.navigate('search/' + this.q, {trigger:false});  
 			this.posts = this.$.ajax.response.response.docs;
-		    //alert(JSON.stringify(this.$.ajax.response));
-		  
+		    //this.cache[this.q] = this.$.ajax.response.response.docs;
+			//alert(JSON.stringify(this.$.ajax.response));
 		  }
 		  else{
 		   
-		    
-   		    this.posts = this.posties;
-			$('article').hide(555).show(555);
-			app.router.navigate('search/' + this.q, {trigger:true});    
-            
+			this.posts = this.posties;
+			
+			$('article').hide(55).show(555);
+		    app.router.navigate('search/' + this.q, {trigger:true});    
+           
+			
 		  }
 		    
 		},
+
 		
 		filtrate: function(v){
 		  if(v){
@@ -164,9 +178,8 @@
 		changeParam: function(v,q){
           
 		  this.q = q;		
-		  this.param = v;
-		  //this.$.ajax.go();
-		  
+		  this.param.q = q;
+		  this.$.ajax.go();
 		  
 		},
 		
@@ -176,11 +189,15 @@
 		  }
 		},
 
-        changeSort: function(e){
-          
-		  _.extend(this.param, e, {merge:true});
-	      this.$.ajax.go();
-		}		
+        changeSort: function(e,q){
+          if(e !== "relevance"){
+		    this.param.sort = e;
+		  }
+		  else{ delete this.param.sort }
+		  this.$.ajax.go();
+		}
+
+        		
 		
 		
 

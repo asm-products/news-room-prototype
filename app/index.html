@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Polymer WebApp</title>
+  <title>News Room</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -24,6 +24,14 @@
   <script src="bower_components/backbone.wreqr.js"></script>  
   <script src="bower_components/backbone.marionette.js"></script>  
  
+   <!-- build:js scripts/app.js -->
+  <script src="scripts/main.js"></script>
+  <script src="scripts/modules.js"></script>
+  <script src="scripts/views/main-view.js"></script>
+  <script src="scripts/views/main-collection-view.js"></script>
+  <script src="scripts/models/main.js"></script>
+  <script src="scripts/app.js"></script>
+  <!-- endbuild-->
   
   <script src="bower_components/web-animations-js/web-animations.js"></script>
   
@@ -34,33 +42,37 @@
 
 <body unresolved>
    <header layout horizontal center>
-     <h1>Title</h1>
+     <h1>News Room</h1>
   
   </header>
   <div class='navWrapper'>
   
   <nav>
-    <div id='search' layout horizontal center>
+    <div id='search' layout horizontal>
 	  <paper-input label='search'></paper-input>
       <core-icon-button icon='search'></core-icon-button>
     </div>
 	
-	<h3>FILTER</h3>
+  <div layout horizontal right>	
+  <paper-radio-group style='width:88%' id='sort' selected="relevance">
+      <paper-radio-button name="relevance" label="Relevance"></paper-radio-button>
+      <paper-radio-button name="newest" label="Newest"></paper-radio-button>
+      <paper-radio-button name="oldest" label="Oldest"></paper-radio-button>
+  </paper-radio-group>
+  <core-icon style='margin-top: 1em' icon='sort' ></core-icon>
+  
+  </div>
+  
+  <!--<h3>FILTER</h3>
    
   <paper-dropdown-menu id='paperMenu' selected="Financier" valueattr="label">
         <paper-item label="Croissant"></paper-item>
         <paper-item label="Donut"></paper-item>
         <paper-item label="Financier"></paper-item>
         <paper-item label="Madeleine"></paper-item>
-  </paper-dropdown-menu>
+  </paper-dropdown-menu>-->
   
-  <h3>Sort</h3>
   
-  <paper-radio-group id='sort' selected="relevance">
-      <paper-radio-button name="relevance" label="Relevance"></paper-radio-button>
-      <paper-radio-button name="newest" label="Newest"></paper-radio-button>
-      <paper-radio-button name="oldest" label="Oldest"></paper-radio-button>
-  </paper-radio-group>
   </nav>
   </div>
   <article>
@@ -85,14 +97,7 @@
   
   
   
-  <!-- build:js scripts/app.js -->
-  <script src="scripts/main.js"></script>
-  <script src="scripts/modules.js"></script>
-  <script src="scripts/views/main-view.js"></script>
-  <script src="scripts/views/main-collection-view.js"></script>
-  <script src="scripts/models/main.js"></script>
-  <script src="scripts/app.js"></script>
-  <!-- endbuild-->
+ 
 </body>
 
 

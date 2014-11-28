@@ -5,3 +5,4 @@ app.Collect = Backbone.Collection.extend({
  
 });
 
+app.newsCollect = new app.Collect;

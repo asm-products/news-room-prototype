@@ -15,7 +15,12 @@
 	  Backbone.history.start();
 	  
 	  app.router.on("route:path", function(path) {
-        $('paper-input').val(path);
+        
+		$('paper-input').val(path);
+		
+		var myElem = document.querySelector('my-element');
+		elem.postsLoaded(path.toString());
+		  
 	  });
 	  //app.router.navigate('search/search', {trigger:true});
 	  //app.mainRegion.show(app.mainView);
@@ -24,8 +29,11 @@
 	
 	app.addInitializer( function(options){
 	
-	  app.Anim = new app.modules.anim;
-	  $('paper-item').on('click', function(e){
+	 app.Anim = new app.modules.anim;
+	 
+	 var myElem = document.querySelector('my-element');
+	 
+	 $('paper-item').on('click', function(e){
 	    var p = this.getAttribute('label');
 		var t = document.querySelector('my-element');
 		var q = '{"q":"' + p + '"}';
@@ -34,19 +42,25 @@
       });
 	  
 	  $('paper-input').on('change', function(e){
-        var p = _.escape($(this).val());
+       
+	    var p = $(this).val();
+		p = _.escape(p);
 		var t = document.querySelector('my-element');
-		var q = '{q:' + p + '}';
+		var q = '{"q":"' + p + '"}';
 	    t.changeParam(q,p);
-		
             
 	  });
 	  
 	  $('#sort').on('change', function(){
 	    var e = this.selected;
 		var t = document.querySelector('my-element');
-		t.changeSort(e);
+		var q = '{"sort":"' + e + '"}';
+	    
+		t.changeSort(e,q);
+		
 	  });
+	  
+	  
 	  
 	});
 	
