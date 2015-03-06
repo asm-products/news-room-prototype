@@ -38,15 +38,16 @@
   <!-- build:vulcanized elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endbuild-->
+
 </head>
 
 <body unresolved>
-   <header layout horizontal center>
-     <h1>News Room</h1>
-  
+
+  <header layout horizontal center>
+    <h1>News Room</h1>
   </header>
-  <div class='navWrapper'>
   
+  <div class='navWrapper'>
   <nav>
     <div id='search' layout horizontal>
 	  <paper-input label='search'></paper-input>
@@ -54,12 +55,13 @@
     </div>
 	
   <div layout horizontal right>	
-  <paper-radio-group style='width:88%' id='sort' selected="relevance">
+  
+    <paper-radio-group style='width:88%' id='sort' selected="newest">
       <paper-radio-button name="relevance" label="Relevance"></paper-radio-button>
       <paper-radio-button name="newest" label="Newest"></paper-radio-button>
       <paper-radio-button name="oldest" label="Oldest"></paper-radio-button>
-  </paper-radio-group>
-  <core-icon style='margin-top: 1em' icon='sort' ></core-icon>
+    </paper-radio-group>
+    <core-icon style='margin-top: 1em' icon='sort' ></core-icon>
   
   </div>
   
@@ -71,10 +73,10 @@
         <paper-item label="Financier"></paper-item>
         <paper-item label="Madeleine"></paper-item>
   </paper-dropdown-menu>-->
-  
-  
+    
   </nav>
   </div>
+  
   <article>
   
   <div class="hero-unit">
@@ -88,18 +90,16 @@
   </div>
   <script type='text/template' id='tmpl'>
   
-    	  <%- info %>
+    <%- info %>
 	
   </script>
 
   </article>
-  <footer><img id='nytimes' src='nytimes.png' title='nytimes-icon' alt='nytimes.png' /></foooter>
   
+  <footer>
+    <img id='nytimes' src='nytimes.png' title='nytimes-icon' alt='nytimes.png' />
+  </foooter>
   
-  
- 
 </body>
-
-
 
 </html>

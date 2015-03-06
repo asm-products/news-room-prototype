@@ -1,8 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 
-
-
 <polymer-element name="my-element" attributes="posts params url changeParam phoneScreen">
   <template>
    
@@ -85,8 +83,7 @@
 	   *
 	   */
 	   
-	  
-	  
+	  	  
 	  String.prototype.decodeHTML = function() {
         var map = {"gt":">" /* , … */};
         return this.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, function($0, $1) {
@@ -97,7 +94,6 @@
           }
         });
       };
-	  
 	  
       Polymer('my-element',{
         // define element prototype here
@@ -112,8 +108,7 @@
 		  this.url = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=cd7c4e4c28ba64f7e457a8e5b8071801:16:69368950';
 	     
 		  this.posties = [
-		     {
-			   
+		     {	   
 			   "headline": {"print_headline": "Story Headline"},
 			   "pub_date": '12-12-10',
 			   "byline": {"original": "by John Smith"},
@@ -133,7 +128,7 @@
 			 }
 		  ];
 		  
-		  this.param = {"q": "obama","sort": "oldest"};
+		  this.param = {"q": "obama","sort": "newest"};
 		  
 		  this.cache = {};
 		  
@@ -154,14 +149,14 @@
 			this.posts = this.posties;
 			
 			$('article').hide(55).show(555);
+		    $('article').scrollTop(0);
+			
 		    app.router.navigate('search/' + this.q, {trigger:true});    
-           
 			
 		  }
 		    
 		},
 
-		
 		filtrate: function(v){
 		  if(v){
 	
@@ -196,17 +191,10 @@
 		  else{ delete this.param.sort }
 		  this.$.ajax.go();
 		}
-
-        		
-		
-		
-
-		
-		
-		
-	 		
       });
 
     })();
+  
   </script>
+
 </polymer-element>
