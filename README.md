@@ -18,8 +18,8 @@ Dependencies: Node/npm, grunt, grunt-cli, and bower.
 
 Fork and clone the repo.
 
-''' bower install
+- bower install
 
-''' npm install
+- npm install
 
-''' grunt serve
+- grunt serve
